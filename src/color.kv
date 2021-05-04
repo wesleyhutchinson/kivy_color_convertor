@@ -1,0 +1,54 @@
+#:kivy 2.0.0
+#:import Clipboard kivy.core.clipboard.Clipboard
+
+<CustLabel@Label>:
+    text_size: self.size
+    halign: "left"
+    valign: "middle"
+
+<CustInput@TextInput>:
+    text_size: self.size
+    padding: [10, 10, 5, 5]
+
+<MainScreen>:
+    id: 'mainscreen'
+    orientation: 'vertical'
+    text_input: rgb_color
+    display_color: disp_color
+    padding: 10
+    spacing: 20
+
+    CustLabel:
+        text: "RGB Color"
+    CustInput:
+        id: rgb_color
+    Button:
+        text: "Get Color"
+        on_press: root.get_kivy_color()
+
+    BoxLayout:
+        orientation: "horizontal"
+        size_hint_y: None
+        height: "40dp"
+        
+        Label:
+            id: kivy_color
+            text: root.kivy_color
+            size_hint_x: .8
+            
+        Button:
+            id: disp_color
+            size_hint_x: .2
+            background_normal: ''
+            # background_color: 0, 0.7, 0.1, 1
+            # background_color: root.display_color
+            # background_color: 0.1, 0.5, 0.6
+            on_release:
+                Clipboard.copy(root.kivy_color)
+            Image:
+                source: "copy-regular.png"
+                center_x: self.parent.center_x
+                center_y: self.parent.center_y
+                height: "40dp"
+                width: "30dp"
+            
