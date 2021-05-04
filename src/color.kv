@@ -10,11 +10,13 @@
     text_size: self.size
     padding: [10, 10, 5, 5]
 
+MainScreen:
+
 <MainScreen>:
     id: 'mainscreen'
-    orientation: 'vertical'
     text_input: rgb_color
-    display_color: disp_color
+    display: display
+    orientation: 'vertical'
     padding: 10
     spacing: 20
 
@@ -22,6 +24,9 @@
         text: "RGB Color"
     CustInput:
         id: rgb_color
+        multiline: False
+        text_size: self.size
+        padding: [10, 20, 5, 15]
     Button:
         text: "Get Color"
         on_press: root.get_kivy_color()
@@ -36,11 +41,11 @@
             text: root.kivy_color
             size_hint_x: .8
             
-        Button:
-            id: disp_color
+        ColorButton:
+            id: display
             size_hint_x: .2
             background_normal: ''
-            background_color: 0, 0.7, 0.1, 1
+            background_color: self.background_color
             
             on_release:
                 Clipboard.copy(root.kivy_color)
