@@ -4,6 +4,8 @@ from kivy.uix.boxlayout import BoxLayout
 from kivy.properties import ObjectProperty
 from kivy.properties import StringProperty
 from kivy.config import Config
+import os, sys
+from kivy.resources import resource_add_path, resource_find
 
 class MainScreen(BoxLayout):
     text_input = ObjectProperty()
@@ -22,17 +24,18 @@ class MainScreen(BoxLayout):
             if len(color) > 1:
                 try:
                     color_string = color[color.find("(")+1:color.find(")")]
-                    print(color_string)
                 except Exception:
                     color_string = color
-            print(color_string)
             kivy = []
-            for c in color_string.split(","):
-                print(c)
+            color_list = color_string.split(",")
+            for c in color_list[:3]:
                 kivy.append(round((int(c) / 255), 2))
-            print(kivy)
-            if len(kivy) == 3:
+
+            if len(color_list) > 3:
+                kivy.append(color_list[-1])
+            else:
                 kivy.append(1)
+
             self.kivy_color = ", ".join(str(x) for x in kivy)
             self.display_color.background_color = kivy
         
@@ -48,4 +51,6 @@ class ColorApp(App):
 
 
 if __name__ == "__main__":
+    if hasattr(sys, '_MEIPASS'):
+        resource_add_path(os.path.join(sys._MEIPASS))
     ColorApp().run()
